@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <link href="https://episphere.github.io/gps/gps.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <hr>
+        <h1>
+            <b style="font-family:fantasy">
+                <sub>embed</sub>
+                Stats
+            </b>
+            <br>
+            <sup style="font-size:small;font-weight:bold">
+                [<a href="https://github.com/epiverse/embedStats" target="_blank">Code</a>
+                ] [<a href="https://observablehq.com/@epiverse/embedStats" target="_blank">Notebook</a>
+                ] [<a href="https://github.com/epiverse/embedStats/issues" target="_blank">Issues</a>
+                ] [<a href="https://github.com/epiverse/embedStats/wiki" target="_blank">Docs</a>
+                ]
+        
+            </sup>
+        </h1>
+        <hr>
+        <h3>Stocastic Direction Descent (SDD)</h3>
+        <p>
+            You can put the equation in the text area below, it's URL, or you can select from the model drop down.
+            For a one-click feeling for how fast this <a href="https://github.com/epiverse/embedStats/wiki" target="_blank">in-browser SDD implementation</a> converge, click this <button id="demo">demo</button> button.
+            Each click will generate a logistic model, use it to generate noisy data, and parameterize it back to the model.
+        </p>
+        <p>
+            To follow the regression process, open the browser devtools console. The generic use starts by 1) loading the data, 2) running the model, 3) plotting both, and 4) finally fit the model parameters.
+            Slower, more complex functions, such as weibullCdfModel, will tipically report progress in the console.
+            You can also follow regression step by step by setting number of iterations to a low value, and then pressing "Fit" repeatedly. 
+            Note that if allowed number of iterations is too low, for example 10, the non-linear regression may not have enough iterations to start converging.
+            
+        </p>
+        <textarea id="textAreaEq" style="height:100"></textarea>
+        <br>
+        <select id="modelSel">
+            <option>logistic</option>
+            <option>rational</option>
+            <option>weibullCdfModel</option>
+            <option>...</option>
+        </select>
+        <button id="loadTestDataBt">Load test data</button>
+        <button id="loadDataBt">Load data</button>
+        <button id="runModelBt">Run</button>
+        <button id="plotDataBt">Plot</button>
+        <button id="fitModel">Fit</button>
+        <input id="iterations" type="number" value=1000 style="width:6em">
+        <button id="reset">reset</button>
+        <table>
+            <tr>
+                <td>
+                    <textarea id="textAreaData" style="height:500;width:15em;"></textarea>
+                </td>
+                <td>
+                    <div id="graphDiv"></div>
+                </td>
+            </tr>
+        </table>
+        parameters<textarea id="parameters" style="width: 100%; text-align:right;">...</textarea>
+    </body>
+</html>
+</body><script src="./index.js" defer></script>
+<!-- <script src="embedStats.js"></script> -->
+</html>
