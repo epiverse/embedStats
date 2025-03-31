@@ -1,0 +1,1 @@
+console.log(`embedStats index.js initiatized at \n${Date()}`);
