@@ -18,15 +18,23 @@
                 ] [<a href="https://github.com/epiverse/embedStats/wiki" target="_blank">Docs</a>
                 ] [<a href="https://docs.google.com/document/d/1U9Gqolwu5qwFT5g-Ecdn9dFV37kJ3h2_3MHx_o17Wkg/edit?tab=t.0#heading=h.v95amsrxkdb0" target="_blank">Paper</a>
                 ]
-        
             </sup>
         </h1>
         <hr>
         <h3>Exploratory tooling for embedded Spaces</h3>
-        <p>
-            Generative AI (GenAI) relies on models of succession of tokenized observations can be derived, typically using the penultimum neural network layer.
+        <p>Succinctly, genAI embedded spaces are high-dimensional mathematical spaces where Generative AI models represent data (like words, images, or concepts) as vectors (points).
         </p>
-        
+        <h3>Load the embedded space</h3>
+        <p>
+            <button id="loadLocal">Load local file</button>
+            <button id="loadRemote">Load remote file</button>
+        </p>
+        <p>
+            Examples of embedding spaces:
+            <br><a href="https://github.com/epiverse/pathembed/raw/refs/heads/main/tcgaPathReports.json.zip">tcgaPathReports.json.zip</a>
+            <br><a href="https://github.com/epiverse/pathembed/raw/refs/heads/main/tcgaSlideEmbeddings.json.zip">tcgaSlideEmbeddings.json.zip</a>
+        </p>
+        <div id="loadingSpace"></div>
     </body>
 </html>
 </body><script src="./index.js" defer></script>
