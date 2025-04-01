@@ -24,15 +24,15 @@
         <h3>Exploratory tooling for embedded Spaces</h3>
         <p>Succinctly, genAI embedded spaces are high-dimensional mathematical spaces where Generative AI models represent data (like words, images, or concepts) as vectors (points).
         </p>
-        <h3>Load the embedded space</h3>
-        <p>
-            <button id="loadLocal">Load local file</button>
+        <h3>Load embedded space</h3>
+        <p> Formated as JSON array, zipped or not, both supported)
+            <br><button id="loadLocal">Load local file</button>
             <button id="loadRemote">Load remote file</button>
         </p>
         <p>
             Examples of embedding spaces:
-            <br><a href="https://github.com/epiverse/pathembed/raw/refs/heads/main/tcgaPathReports.json.zip">tcgaPathReports.json.zip</a>
-            <br><a href="https://github.com/epiverse/pathembed/raw/refs/heads/main/tcgaSlideEmbeddings.json.zip">tcgaSlideEmbeddings.json.zip</a>
+            <br><a href="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaPathReports.json.zip">tcgaPathReports.json.zip</a> (TCGA reports embedded by Gemini 1.5 Flash)
+            <br><a href="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip">tcgaSlideEmbeddings.json.zip</a> (...)
         </p>
         <div id="loadingSpace"></div>
     </body>
