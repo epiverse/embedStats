@@ -119,7 +119,7 @@ async function loadZippedFile() {
         // Access content of each file using zipEntry.async('text') or zipEntry.async('arraybuffer')
       });
     } catch (error) {
-      console.error('Error loading zip file:', error);
+      throw new Error('Error loading zip file:', error);
     }
   };
   input.click();
