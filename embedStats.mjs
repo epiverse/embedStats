@@ -34,9 +34,8 @@ function saveFile(txt=':-)', fileName="hello.txt") {
 }
 
 // convert mason format into tsv format
-
+// tsv = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).mason2tsv(['id','title'])
 async function mason2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', 'journalTitle', 'authors', 'keywords'], url='https://raw.githubusercontent.com/epiverse/pubCloud/refs/heads/main/dceg_publications_title-abstract_gemini.json') {
-    // tsv = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).mason2tsv(['id','title'])
     let docs
     if (typeof (url) == 'string') {
         docs = await (await fetch(url)).json()
@@ -67,10 +66,10 @@ async function mason2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', 'jour
                     row += el.join(',')
                 }
                 break;
-                case 'string':
-                row+=el.replace(/[\n\t]/g,'')
+            case 'string':
+                row += el.replace(/[\n\t]/g, '')
                 break;
-                default:
+            default:
                 console.error('element type not recognized')
                 break;
             }
@@ -80,4 +79,21 @@ async function mason2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', 'jour
     return tsv
 }
 
-export {unzipURL, saveFile, mason2tsv}
+async function readTextFile(fun=console.log) {
+    let loadFile = document.createElement('input')
+    loadFile.type = 'file';
+    loadFile.hidden = true;
+    document.body.appendChild(loadFile);
+    loadFile.onchange = evt => {
+        let fr = new FileReader();
+        fr.onload = function() {
+            fun(fr.result)
+            loadFile.parentElement.removeChild(loadFile)
+            // cleanup
+        }
+        fr.readAsText(loadFile.files[0]);
+    }
+    loadFile.click()
+}
+
+export {unzipURL, saveFile, mason2tsv,readTextFile}
