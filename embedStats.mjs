@@ -34,8 +34,8 @@ function saveFile(txt=':-)', fileName="hello.txt") {
 }
 
 // convert mason format into tsv format
-// tsv = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).mason2tsv(['id','title'])
-async function mason2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', 'journalTitle', 'authors', 'keywords'], url='https://raw.githubusercontent.com/epiverse/pubCloud/refs/heads/main/dceg_publications_title-abstract_gemini.json') {
+// tsv = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).masonMeta2tsv(['id','title'])
+async function masonMeta2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', 'journalTitle', 'authors', 'keywords'], url='https://raw.githubusercontent.com/epiverse/pubCloud/refs/heads/main/dceg_publications_title-abstract_gemini.json') {
     let docs
     if (typeof (url) == 'string') {
         docs = await (await fetch(url)).json()
@@ -99,34 +99,37 @@ async function readTextFile(fun=console.log) {
 }
 
 async function loadZippedFile() {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = '.zip';
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.zip';
 
-  input.onchange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) {
-      return;
-    }
+    input.onchange = async (event) => {
+        const file = event.target.files[0];
+        if (!file) {
+            return;
+        }
 
-    try {
-      const buffer = await file.arrayBuffer();
-      const zip = await JSZip.loadAsync(buffer);
-      // Process the zip object here
-      // Example: Loop through files in the zip
-      zip.forEach((relativePath, zipEntry) => {
-        console.log(zipEntry.name);
-        // Access content of each file using zipEntry.async('text') or zipEntry.async('arraybuffer')
-      });
-    } catch (error) {
-      throw new Error('Error loading zip file:', error);
+        try {
+            const buffer = await file.arrayBuffer();
+            const zip = await JSZip.loadAsync(buffer);
+            // Process the zip object here
+            // Example: Loop through files in the zip
+            zip.forEach( (relativePath, zipEntry) => {
+                console.log(zipEntry.name);
+                // Access content of each file using zipEntry.async('text') or zipEntry.async('arraybuffer')
+            }
+            );
+        } catch (error) {
+            throw new Error('Error loading zip file:',error);
+        }
     }
-  };
-  input.click();
+    ;
+    input.click();
 }
 
 // using native file api
-async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, txt, json 
+async function extractFirstTextFromZipViaPicker() {
+    // handles tsv, csv, text, txt, json 
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
     // 1. Check for Native File System API support
     if (!window.showOpenFilePicker) {
@@ -136,14 +139,12 @@ async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, 
     try {
         // 3. Show the file picker, requesting a single .zip file
         const [fileHandle] = await window.showOpenFilePicker({
-            types: [
-                {
-                    description: 'ZIP Archives',
-                    accept: {
-                        'application/zip': ['.zip']
-                    }
-                },
-            ],
+            types: [{
+                description: 'ZIP Archives',
+                accept: {
+                    'application/zip': ['.zip']
+                }
+            }, ],
             multiple: false // Ensure only one file is selected
         });
 
@@ -157,16 +158,20 @@ async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, 
         const zip = await JSZip.loadAsync(arrayBuffer);
         // 7. Find the first file ending in .txt (case-insensitive)
         let firstTextFileEntry = null;
-        const filePromises = []; // To handle async operations within the loop if needed
+        const filePromises = [];
+        // To handle async operations within the loop if needed
         // JSZip's zip.file(/regex/) is efficient for finding matches
         //const textFileEntries = zip.file(/.+\.[cjnostvx]{3,4}$/i); // Find files ending in .txt, .tsv, .csv or .json
-        const textFileEntries = zip.file(/.*/); // Find files ending in .txt, .tsv, .csv or .json
-        
+        const textFileEntries = zip.file(/.*/);
+        // Find files ending in .txt, .tsv, .csv or .json
+
         for (const entry of textFileEntries) {
-            if (!entry.dir) { // Make sure it's not a directory named something.txt/
+            if (!entry.dir) {
+                // Make sure it's not a directory named something.txt/
                 firstTextFileEntry = entry;
                 console.log(`Found text file: ${entry.name}`);
-                break; // Stop after finding the first one
+                break;
+                // Stop after finding the first one
             }
         }
 
@@ -174,14 +179,16 @@ async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, 
         if (firstTextFileEntry) {
             console.log(`Extracting content from: ${firstTextFileEntry.name}...`);
             let textContent = await firstTextFileEntry.async('string');
-            if(textContent.match(/^[\[\}]/)){  // if JSON
-                textContent=JSON.parse(textContent)
+            if (textContent.match(/^[\[\}]/)) {
+                // if JSON
+                textContent = JSON.parse(textContent)
             }
             console.log('Extraction successful.');
             return textContent;
         } else {
             console.log('No .txt file found within the zip archive.');
-            return null; // Indicate that no suitable file was found
+            return null;
+            // Indicate that no suitable file was found
         }
 
     } catch (err) {
@@ -189,7 +196,8 @@ async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, 
         if (err.name === 'AbortError') {
             // This error occurs if the user closes the file picker dialog
             console.log('File selection canceled by the user.');
-            return null; // Return null to indicate cancellation, not an unexpected error
+            return null;
+            // Return null to indicate cancellation, not an unexpected error
         } else {
             // Log and re-throw other errors
             console.error('Error during zip file processing:', err);
@@ -198,5 +206,4 @@ async function extractFirstTextFromZipViaPicker() {  // handles tsv, csv, text, 
     }
 }
 
-
-export {unzipURL, saveFile, mason2tsv,readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker}
