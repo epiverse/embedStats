@@ -1,4 +1,4 @@
-console.log('embedStats.mjs modules');
+console.log(`embedStats.mjs modules imported\n${Date()}`);
 
 async function unzipURL(url="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip") {
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
@@ -206,4 +206,44 @@ async function extractFirstTextFromZipViaPicker() {
     }
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker}
+// creates tsv metadata text file wit
+// convert docs into tsv metadata
+function docs2meta(docs, attrs){
+    let tsv = attrs.join('\t')
+    // table header
+    let n = docs.length
+    let m = attrs.length
+    for (let i = 0; i < n; i++) {
+        let row
+        for (let j = 0; j < m; j++) {
+            if (j == 0) {
+                row = '\n'
+            } else {
+                row += '\t'
+            }
+            let el = docs[i][attrs[j]]
+            switch (typeof (el)) {
+            case 'undefined':
+                row += 'undefined';
+                break;
+            case 'object':
+                if (attrs[j] == 'authors') {
+                    row += el.map(x => x.name).join(',')
+                } else if (attrs[j] == 'keywords') {
+                    row += el.join(',')
+                }
+                break;
+            case 'string':
+                row += el.replace(/[\n\t]/g, '')
+                break;
+            default:
+                console.error('element type not recognized')
+                break;
+            }
+        }
+        tsv += row
+    }
+    return tsv
+}
+
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta}
