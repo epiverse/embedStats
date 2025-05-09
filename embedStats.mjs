@@ -208,7 +208,16 @@ async function extractFirstTextFromZipViaPicker() {
 
 // creates tsv metadata text file wit
 // convert docs into tsv metadata
+// automatically checks for 'properties'
 function docs2meta(docs, attrs){
+    if(docs[0].properties){ // if attributes stacked under properties
+        let props = Object.keys(docs[0].properties)
+        docs.forEach((d,i)=>{
+            props.forEach((p,j)=>{
+                docs[i][p]=d.properties[p]
+            })
+        })
+    }
     let tsv = attrs.join('\t')
     // table header
     let n = docs.length
