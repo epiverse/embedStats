@@ -87,8 +87,8 @@ function vec2tsv(vec){
 function tsv2vec(tsv){
    return tsv.split(/\n/).map(x=>parseFloat(x.split(/\t/))) 
 }
-// load Demo vectors, defaul from Praful's tcgaSlides
-async function demoVectors(url='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip'){
+// load Demo vectors, default from TCGA reports
+async function demoVectors(url='https://dl.dropboxusercontent.com/scl/fi/7x2o8900hw3psxaoql7uj/embeddings_9523.tsv?rlkey=pctxu60c39ygq71jw2yr3e06y&st=kd2tz766&dl=0'){
     return await embedStats.unzipURL(url)
 }
 
