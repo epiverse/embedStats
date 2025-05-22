@@ -87,6 +87,10 @@ function vec2tsv(vec){
 function tsv2vec(tsv){
    return tsv.split(/\n/).map(x=>parseFloat(x.split(/\t/))) 
 }
+// load Demo vectors, defaul from Praful's tcgaSlides
+async function demoVectors(url='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip'){
+    return await embedStats.unzipURL(url)
+}
 
 //txt = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).readTextFile()
 async function readTextFile(fun=console.log) {
@@ -264,4 +268,4 @@ function docs2meta(docs, attrs){
     return tsv
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors}
