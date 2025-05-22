@@ -79,6 +79,15 @@ async function masonMeta2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', '
     return tsv
 }
 
+// simple vectors to tsv conversion
+function vec2tsv(vec){
+    return vec.map(v=>v.join('\t')).join('\n')
+}
+// simple tsv to vectors conversion
+function tsv2vec(tsv){
+   return tsv.split(/\n/).map(x=>parseFloat(x.split(/\t/))) 
+}
+
 //txt = await (await import('https://epiverse.github.io/embedStats/embedStats.mjs')).readTextFile()
 async function readTextFile(fun=console.log) {
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
@@ -255,4 +264,4 @@ function docs2meta(docs, attrs){
     return tsv
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec}

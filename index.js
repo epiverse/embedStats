@@ -5,7 +5,8 @@ console.log(`embedStats index.js initiatized at \n${Date()}`);
     
     // load dependencies
     const JSZip = await import('https://esm.sh/jszip@3.10.1').default
-    const embedStats = await import('./embedStats.mjs')
+    //const embedStats = await import('./embedStats.mjs')
+    const embedStats = await import('https://epiverse.github.io/embedStats/embedStats.mjs')
     
     // setting the stage
     function delay(ms) {
@@ -24,8 +25,9 @@ console.log(`embedStats index.js initiatized at \n${Date()}`);
             loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaPathReports.json.zip'
         }else{ // input is open, load URL
             //let vectors = await embedStats.loadZippedFile(loadRemoteVectorsInput.value)
+            embedStats
             let docs = await (await import('./embedStats.mjs')).unzipURL(loadRemoteVectorsInput.value)
-            let vectors = docs.map(x=>x.embeddings).map(x=>x.join('\t'))
+            let vectors = docs.map(x=>x.embeddings)
             debugger
         }
     }
