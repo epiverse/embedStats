@@ -1,9 +1,11 @@
 console.log(`embedStats.mjs modules imported\n${Date()}`);
-
+const localForage = await import("https://esm.sh/localforage")
 async function unzipURL(url="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip") {
+    const localForage = await import("https://esm.sh/localforage")
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
     // xx = await (await import('./embedStats.mjs')).unzipURL()
     console.log(`unzipping from ${url}\nthis may take a few seconds, maybe a minute ...`)
+    msg.value = `unzipping from ${url}\nthis may take a few seconds, maybe a minute ...`
     let response = await fetch(url)
     let data = await response.arrayBuffer()
     let zip = await JSZip.loadAsync(data);
@@ -268,4 +270,9 @@ function docs2meta(docs, attrs){
     return tsv
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors}
+async function store(cmd='list_dbs',db){
+    localForage
+    debugger
+}
+
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localForage, store}

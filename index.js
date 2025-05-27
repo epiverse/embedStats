@@ -23,11 +23,13 @@ console.log(`embedStats index.js initiatized at \n${Date()}`);
         if(loadRemoteVectorsInput.hidden){ // input is close, open it
             loadRemoteVectorsInput.hidden=false
             loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaPathReports.json.zip'
+            msg.innerHTML=`<p style="color:maroon">Cliking again will load from the URL provided</p>`
         }else{ // input is open, load URL
             //let vectors = await embedStats.loadZippedFile(loadRemoteVectorsInput.value)
             embedStats
             let docs = await (await import('./embedStats.mjs')).unzipURL(loadRemoteVectorsInput.value)
             let vectors = docs.map(x=>x.embeddings)
+            let vecTsv = embedStats.vec2tsv(vectors)
             debugger
         }
     }
