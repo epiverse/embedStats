@@ -270,9 +270,20 @@ function docs2meta(docs, attrs){
     return tsv
 }
 
-async function store(cmd='list_dbs',db){
+async function localDrive(cmd='list_dbs',db){
     localForage
-    debugger
+    let ans = Date()
+    switch(cmd){
+        case 'list_dbs':
+            console.log(cmd);
+            break;
+        case 'clear_dbs':
+            console.log(cmd)
+            break;
+        default:
+            console.log(`command "${cmd}" not found`);
+    }
+    return ans
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localForage, store}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localForage, localDrive}
