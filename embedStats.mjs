@@ -1,7 +1,6 @@
 console.log(`embedStats.mjs modules imported\n${Date()}`);
-const localForage = await import("https://esm.sh/localforage")
 async function unzipURL(url="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip") {
-    const localForage = await import("https://esm.sh/localforage")
+    //const localForage = await import("https://esm.sh/localforage")
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
     // xx = await (await import('./embedStats.mjs')).unzipURL()
     console.log(`unzipping from ${url}\nthis may take a few seconds, maybe a minute ...`)
@@ -82,15 +81,15 @@ async function masonMeta2tsv(attrs=['id', 'title', 'abstract', 'year', 'date', '
 }
 
 // simple vectors to tsv conversion
-function vec2tsv(vec){
-    return vec.map(v=>v.join('\t')).join('\n')
+function vec2tsv(vec) {
+    return vec.map(v => v.join('\t')).join('\n')
 }
 // simple tsv to vectors conversion
-function tsv2vec(tsv){
-   return tsv.split(/\n/).map(x=>parseFloat(x.split(/\t/))) 
+function tsv2vec(tsv) {
+    return tsv.split(/\n/).map(x => parseFloat(x.split(/\t/)))
 }
 // load Demo vectors, default from TCGA reports
-async function demoVectors(url='https://dl.dropboxusercontent.com/scl/fi/7x2o8900hw3psxaoql7uj/embeddings_9523.tsv?rlkey=pctxu60c39ygq71jw2yr3e06y&st=kd2tz766&dl=0'){
+async function demoVectors(url='https://dl.dropboxusercontent.com/scl/fi/7x2o8900hw3psxaoql7uj/embeddings_9523.tsv?rlkey=pctxu60c39ygq71jw2yr3e06y&st=kd2tz766&dl=0') {
     return await embedStats.unzipURL(url)
 }
 
@@ -224,14 +223,17 @@ async function extractFirstTextFromZipViaPicker() {
 // creates tsv metadata text file wit
 // convert docs into tsv metadata
 // automatically checks for 'properties'
-function docs2meta(docs, attrs){
-    if(docs[0].properties){ // if attributes stacked under properties
+function docs2meta(docs, attrs) {
+    if (docs[0].properties) {
+        // if attributes stacked under properties
         let props = Object.keys(docs[0].properties)
-        docs.forEach((d,i)=>{
-            props.forEach((p,j)=>{
-                docs[i][p]=d.properties[p]
-            })
-        })
+        docs.forEach( (d, i) => {
+            props.forEach( (p, j) => {
+                docs[i][p] = d.properties[p]
+            }
+            )
+        }
+        )
     }
     let tsv = attrs.join('\t')
     // table header
@@ -270,20 +272,35 @@ function docs2meta(docs, attrs){
     return tsv
 }
 
-async function localDrive(cmd='list_dbs',db){
-    localForage
+//const localForage = (await import("https://esm.sh/localforage")).default
+async function localDrive(cmd='localDrive', db) {
     let ans = Date()
-    switch(cmd){
-        case 'list_dbs':
-            console.log(cmd);
-            break;
-        case 'clear_dbs':
-            console.log(cmd)
-            break;
-        default:
-            console.log(`command "${cmd}" not found`);
+    const localForage = (await import("https://esm.sh/localforage")).default
+    switch (cmd) {
+    case 'localDrive':
+        // current status
+        // check initialization
+        //debugger
+        const dbName = 'LDrive';
+        localForage.createInstance({
+            name: dbName,
+            storeName: 'tableOne',
+            description: '...'
+        });
+        localForage.createInstance({
+            name: dbName,
+            storeName: 'tableTwo',
+            description: '...'
+        });
+        console.log(cmd, Date());
+        break;
+    case 'clear_dbs':
+        console.log(cmd)
+        break;
+    default:
+        console.log(`command "${cmd}" not found`);
     }
     return ans
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localForage, localDrive}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive}
