@@ -273,34 +273,46 @@ function docs2meta(docs, attrs) {
 }
 
 //const localForage = (await import("https://esm.sh/localforage")).default
-async function localDrive(cmd='localDrive', db) {
-    let ans = Date()
-    const localForage = (await import("https://esm.sh/localforage")).default
+async function localDrive(cmd='localDrive', db, opts) {
+    console.log(`localDrive running\n${Date()}`)
+    const localforage = (await import("https://esm.sh/localforage")).default
+    let localDrive = await localforage.createInstance({
+      name: 'localDrive'
+    })
+    let uuid = crypto.randomUUID()
+    //----------------------
     switch (cmd) {
     case 'localDrive':
-        // current status
-        // check initialization
+        // initialization
+        await localDrive.setItem(uuid,
+                {
+                   date:Date.now(),
+                   cmd:cmd,
+                   uuid:uuid,
+                   opts:opts
+                }
+            )
         //debugger
-        const dbName = 'LDrive';
-        localForage.createInstance({
-            name: dbName,
-            storeName: 'tableOne',
-            description: '...'
-        });
-        localForage.createInstance({
-            name: dbName,
-            storeName: 'tableTwo',
-            description: '...'
-        });
-        console.log(cmd, Date());
         break;
-    case 'clear_dbs':
-        console.log(cmd)
-        break;
+    //----------------------
+    case 'index_vectors':
+            let vectors = await localforage.createInstance({name:'vectors'})
+            let vectorSpecs = await localforage.createInstance({name:'vectorSpecs'})
+        
+        let specs = {
+            uuid:uuid,
+            n:db.length,
+            m:db[0].length,
+            opts:opts
+        };
+        await vectors.setItem(uuid,db);
+        await vectorSpecs.setItem(uuid,specs);
+        await localDrive.setItem(uuid,Date.now());
+        //break;
     default:
         console.log(`command "${cmd}" not found`);
     }
-    return ans
+    return 
 }
 
 export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive}
