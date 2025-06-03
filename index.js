@@ -1,5 +1,19 @@
 console.log(`embedStats index.js initiatized at \n${Date()}`);
 
+let EmbedAssembly = {}
+
+async function doMsg(msgText='hello world :-) !', msgDiv=document.querySelector('#msg')){
+    // define assync delay
+    // console.log(Date())
+    async function delay(ms=ms){
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    // add one letter at a setTimeout
+    for(let i=0 ; i<msgText.length+1 ; i++){
+        await delay(10)
+        msgDiv.innerHTML=`> ${msgText.slice(0,i)}`
+    }
+}
 
 (async function() { // keeping interactions within annonymous async function :-P
     
@@ -22,20 +36,27 @@ console.log(`embedStats index.js initiatized at \n${Date()}`);
         // loadRemoteVectorsInput.hidden=!loadRemoteVectorsInput.hidden
         if(loadRemoteVectorsInput.hidden){ // input is close, open it
             loadRemoteVectorsInput.hidden=false
-            loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaPathReports.json.zip'
-            msg.innerHTML=`<p style="color:maroon">Cliking again will load from the URL provided</p>`
+            loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/vectorsTCGAreps.tsv.zip'
+            //msg.innerHTML=`<p style="color:maroon">Cliking load again will load from the URL provided</p>`
+            doMsg('Clicking load again will load from the URL')
         }else{ // input is open, load URL
             //let vectors = await embedStats.loadZippedFile(loadRemoteVectorsInput.value)
             embedStats
+            // check this is zipped
+            if(loadRemoteVectorsInput.value.match(/\.zip$/g)){
+                console.log(`unzipping remote vector file at ${loadRemoteVectorsInput.value}`)
+                EmbedAssembly.vectors=await embedStats.unzipURL(loadRemoteVectorsInput.value)
+                debugger
+            }
+            /*
             let docs = await (await import('./embedStats.mjs')).unzipURL(loadRemoteVectorsInput.value)
             let vectors = docs.map(x=>x.embeddings)
             let vecTsv = embedStats.vec2tsv(vectors)
+            */
             debugger
         }
     }
     loadRemoteMeta.onclick=function(){
         loadRemoteMetaInput.hidden=!loadRemoteMetaInput.hidden
-    }
-
-    
+    }   
 })()
