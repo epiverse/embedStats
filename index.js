@@ -54,7 +54,7 @@ async function doMsg(msgText='hello world :-) !', color="navy", msgDiv=document.
             let vectors = docs.map(x=>x.embeddings)
             let vecTsv = embedStats.vec2tsv(vectors)
             */
-            embedStats.fun_granularity(embedAssembly)
+            embedStats.fun_capacityDimension(embedAssembly)
         }
     }
     loadRemoteMeta.onclick=function(){

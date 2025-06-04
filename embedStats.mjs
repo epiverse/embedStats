@@ -315,9 +315,11 @@ async function localDrive(cmd='localDrive', db, opts) {
     }
     return 
 }
-
-function fun_granularity(div,assembly=embedAssembly){ // analysis of granularity
-    console.log('granularity calculation')
+// --- fun ----
+const Plotly = (await import('https://cdn.jsdelivr.net/npm/plotly.js-dist@3.0.1/+esm')).default
+const localforage = await import("https://esm.sh/localforage")
+function fun_capacityDimension(div,assembly=embedAssembly){ // analysis of granularity
+    console.log('granularity calculation',Plotly)
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, embedAssembly, fun_granularity}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, embedAssembly, fun_capacityDimension}
