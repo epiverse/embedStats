@@ -1,5 +1,5 @@
 console.log(`embedStats.mjs modules imported\n${Date()}`);
-var EmbedAssembly
+var embedAssembly
 async function unzipURL(url="https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/tcgaSlideEmbeddings.json.zip") {
     //const localForage = await import("https://esm.sh/localforage")
     const JSZip = (await import('https://esm.sh/jszip@3.10.1')).default
@@ -316,4 +316,4 @@ async function localDrive(cmd='localDrive', db, opts) {
     return 
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, EmbedAssembly}
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, embedAssembly}

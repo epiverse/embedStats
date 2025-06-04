@@ -2,8 +2,9 @@ console.log(`embedStats index.js initiatized at \n${Date()}`);
 
 let EmbedAssembly = {}
 
-async function doMsg(msgText='hello world :-) !', msgDiv=document.querySelector('#msg')){
+async function doMsg(msgText='hello world :-) !', color="navy", msgDiv=document.querySelector('#msg')){
     // define assync delay
+    msgDiv.style.color=color
     // console.log(Date())
     async function delay(ms=ms){
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -36,7 +37,7 @@ async function doMsg(msgText='hello world :-) !', msgDiv=document.querySelector(
         // loadRemoteVectorsInput.hidden=!loadRemoteVectorsInput.hidden
         if(loadRemoteVectorsInput.hidden){ // input is close, open it
             loadRemoteVectorsInput.hidden=false
-            loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/pathembed/refs/heads/main/vectorsTCGAreps.tsv.zip'
+            loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/embedStats/refs/heads/main/vectorsTCGAreps.tsv.zip'
             //msg.innerHTML=`<p style="color:maroon">Cliking load again will load from the URL provided</p>`
             doMsg('Clicking load again will load from the URL')
         }else{ // input is open, load URL
