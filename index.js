@@ -1,6 +1,6 @@
 console.log(`embedStats index.js initiatized at \n${Date()}`);
 
-let EmbedAssembly = {}
+let embedAssembly = {}
 
 async function doMsg(msgText='hello world :-) !', color="navy", msgDiv=document.querySelector('#msg')){
     // define assync delay
@@ -39,22 +39,22 @@ async function doMsg(msgText='hello world :-) !', color="navy", msgDiv=document.
             loadRemoteVectorsInput.hidden=false
             loadRemoteVectorsInput.value='https://raw.githubusercontent.com/epiverse/embedStats/refs/heads/main/vectorsTCGAreps.tsv.zip'
             //msg.innerHTML=`<p style="color:maroon">Cliking load again will load from the URL provided</p>`
-            doMsg('Clicking load again will load from the URL')
+            doMsg('Clicking again will load from the URL','darkred')
         }else{ // input is open, load URL
             //let vectors = await embedStats.loadZippedFile(loadRemoteVectorsInput.value)
             embedStats
             // check this is zipped
             if(loadRemoteVectorsInput.value.match(/\.zip$/g)){
                 console.log(`unzipping remote vector file at ${loadRemoteVectorsInput.value}`)
-                EmbedAssembly.vectors=await embedStats.unzipURL(loadRemoteVectorsInput.value)
-                debugger
+                embedAssembly.vectors=await embedStats.unzipURL(loadRemoteVectorsInput.value)
+                //debugger
             }
             /*
             let docs = await (await import('./embedStats.mjs')).unzipURL(loadRemoteVectorsInput.value)
             let vectors = docs.map(x=>x.embeddings)
             let vecTsv = embedStats.vec2tsv(vectors)
             */
-            debugger
+            embedStats.fun_granularity(embedAssembly)
         }
     }
     loadRemoteMeta.onclick=function(){

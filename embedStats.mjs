@@ -316,4 +316,8 @@ async function localDrive(cmd='localDrive', db, opts) {
     return 
 }
 
-export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, embedAssembly}
+function fun_granularity(div,assembly=embedAssembly){ // analysis of granularity
+    console.log('granularity calculation')
+}
+
+export {unzipURL, saveFile, masonMeta2tsv, readTextFile, loadZippedFile, extractFirstTextFromZipViaPicker, docs2meta, vec2tsv, tsv2vec, demoVectors, localDrive, embedAssembly, fun_granularity}
