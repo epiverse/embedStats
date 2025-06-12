@@ -1,0 +1,1 @@
+console.log(`numerical derivation\n${Date()}`)

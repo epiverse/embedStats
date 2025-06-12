@@ -44,3 +44,28 @@ function disCut(cDist,cut){ // number of neighbours at a given cutoff distance
 // do this could generate points for the capacity dimension plot,
 // for a cutoff of 0.6:
 // disCut(crossDist(v.slice(0,100)),0.6)
+
+// capacity plot
+
+async function capacityPlot(div,cDist){
+    /*
+    let x = [...Array(131)].map((x,i)=>i/100)
+    let y = x.map((xi,i)=>disCut(cDist,xi))
+    */
+    if(!document.getElementById('capacityPlotDiv')){
+        div = document.createElement('div')
+        div.id='capacityPlotDiv'
+        document.body.appendChild(div)
+    }else{
+        div = document.getElementById('capacityPlotDiv')
+    }
+    let cuts = await localforage.getItem('cuts')
+    let cutOfftrace ={
+        x:cuts.x,
+        y:cuts.y, //.map(yi=>yi-9523)
+        type:'scatter'
+    }
+    layout
+    Plotly.newPlot(div,[cutOfftrace],layout)
+}
+await capacityPlot(div)
